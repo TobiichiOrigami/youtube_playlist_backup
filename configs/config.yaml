@@ -1,0 +1,5 @@
+google:
+  client_id: ${GOOGLE_CLIENT_ID}
+  client_secret: ${GOOGLE_CLIENT_SECRET}
+playlist_id: ${YOUTUBE_PLAYLIST_ID}
+backup_dir: ${BACKUP_DIR:-backups}  # 預設值為 backups
