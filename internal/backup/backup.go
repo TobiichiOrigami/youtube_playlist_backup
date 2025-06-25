@@ -3,7 +3,6 @@ package backup
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -72,12 +71,12 @@ func saveBackup(backupDir string, videos []Video) error {
 	filename := fmt.Sprintf("backup_%s.json", time.Now().Format("20060102_150405"))
 	path := filepath.Join(backupDir, filename)
 
-	file, err := json.MarshalIndent(videos, "", "  ")
+	data, err := json.MarshalIndent(videos, "", "  ")
 	if err != nil {
 		return fmt.Errorf("序列化備份資料失敗: %w", err)
 	}
 
-	if err := ioutil.WriteFile(path, file, 0644); err != nil {
+	if err := os.WriteFile(path, data, 0644); err != nil {
 		return fmt.Errorf("寫入備份檔案失敗: %w", err)
 	}
 	return nil

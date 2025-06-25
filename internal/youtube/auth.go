@@ -43,23 +43,24 @@ func getToken(config *oauth2.Config) (*oauth2.Token, error) {
 }
 
 func readToken(file string) (*oauth2.Token, error) {
-	f, err := os.Open(file)
+	data, err := os.ReadFile(file)
 	if err != nil {
 		return nil, err
 	}
-	defer f.Close()
 	
 	tok := &oauth2.Token{}
-	return tok, json.NewDecoder(f).Decode(tok)
+	if err := json.Unmarshal(data, tok); err != nil {
+		return nil, err
+	}
+	return tok, nil
 }
 
 func saveToken(file string, token *oauth2.Token) error {
-	f, err := os.OpenFile(file, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0600)
+	data, err := json.Marshal(token)
 	if err != nil {
 		return err
 	}
-	defer f.Close()
-	return json.NewEncoder(f).Encode(token)
+	return os.WriteFile(file, data, 0600)
 }
 
 func NewClient(clientID, clientSecret string) (*youtube.Service, error) {

@@ -3,8 +3,8 @@ package backup
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
+	"os"
 	"path/filepath"
 	"sort"
 )
@@ -48,22 +48,22 @@ func CompareBackups(backupDir string) error {
 }
 
 func getBackupFiles(dir string) ([]string, error) {
-	files, err := ioutil.ReadDir(dir)
+	entries, err := os.ReadDir(dir)
 	if err != nil {
 		return nil, fmt.Errorf("讀取備份目錄失敗: %w", err)
 	}
 
 	var filePaths []string
-	for _, file := range files {
-		if !file.IsDir() {
-			filePaths = append(filePaths, filepath.Join(dir, file.Name()))
+	for _, entry := range entries {
+		if !entry.IsDir() {
+			filePaths = append(filePaths, filepath.Join(dir, entry.Name()))
 		}
 	}
 	return filePaths, nil
 }
 
 func loadBackup(path string) ([]Video, error) {
-	data, err := ioutil.ReadFile(path)
+	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, fmt.Errorf("讀取備份檔案失敗: %w", err)
 	}
