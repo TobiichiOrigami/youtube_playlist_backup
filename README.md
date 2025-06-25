@@ -2,10 +2,17 @@
 
 此工具可備份指定 YouTube 播放清單的影片資訊，並比對兩次備份間的差異，找出被刪除的影片。
 
+> ⚠️ **授權方式警告**
+> 本專案使用 OAuth 2.0 的 OOB (Out-of-Band) 授權流程，此方式已被 Google 標記為[已淘汰](https://developers.google.com/identity/protocols/oauth2/resources/oob-migration)。
+> 雖然目前仍可運作，但請注意：
+> 1. Google 可能隨時停止支援此授權方式
+> 2. 未來需要遷移至 PKCE 或其他更安全的授權流程
+> 3. 生產環境應用應考慮使用更現代的授權方式
+
 ## 功能
 - 備份播放清單中的影片標題和 ID
 - 比對兩次備份差異，找出缺失影片
-- 支援 OAuth 2.0 授權流程
+- 支援 OAuth 2.0 授權流程 (使用 OOB 方式)
 
 ## 使用前準備
 此工具需要在本地環境運行，但必須先透過 Google Cloud Console 取得 API 憑證：
