@@ -4,9 +4,6 @@
 # 忽略備份檔案
 backups/
 
-# 忽略二進位檔案
-youtube-backup
-
 # 忽略 IDE 設定
 .vscode/
 .idea/
