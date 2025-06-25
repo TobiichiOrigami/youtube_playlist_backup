@@ -76,14 +76,15 @@ func loadBackup(path string) ([]Video, error) {
 }
 
 func findMissingVideos(previous, current []Video) []Video {
-	currentMap := make(map[string]bool)
+	currentMap := make(map[string]string)
 	for _, v := range current {
-		currentMap[v.ID] = true
+		currentMap[v.ID] = v.Title
 	}
 
 	var missing []Video
 	for _, v := range previous {
-		if !currentMap[v.ID] {
+		title, exists := currentMap[v.ID]
+		if !exists || title == "Deleted video" {
 			missing = append(missing, v)
 		}
 	}
